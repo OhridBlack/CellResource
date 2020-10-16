@@ -16,12 +16,39 @@ class SWC:
 class NT:
     def __init__(self,swc_list):
         self.swc_list=swc_list
+        self.tip_list=[]
+        self.branch_list=[]
+        self.start_list=[]
+        self.soma=None
+        self.total_length=0
 
     def coordinate_list(self):
         co_list=[]
         for swc in self.swc_list:
             co_list.append([swc.x,swc.y,swc.z])
         return co_list
+
+    def count_tip_branch(self):
+        #get tip points and branch points
+        childrenDic={}
+        for swc in self.swc_list:
+            if swc.pid==-1:
+                self.start_list.append(swc)
+            else:
+                if swc.pid not in childrenDic:
+                    childrenDic.update({swc.pid:1})
+                else:
+                    childrenDic[swc.pid]+=1
+
+        for swc in self.swc_list:
+            if swc.pid==-1:
+                continue
+            if swc.id not in childrenDic:
+                self.tip_list.append(swc)
+            elif childrenDic[swc.id]>=2:
+                self.branch_list.append(swc)
+
+
 
     #def resample(self,step):
 
@@ -40,6 +67,9 @@ def readSWC_NT(filepath):
 
 #def readNTs(filepath):
 
-#swc_list=readNT("E:\\163data_resource\\5\\01_5.v3dpbd_smartTracing.swc")
-#for swc in swc_list:
-#    swc.show()
+#nt=readSWC_NT("E:\\163data_resource\\5\\01_5.v3dpbd_smartTracing.swc")
+#nt.count_tip_branch()
+#print("tip numbers:",len(nt.tip_list))
+#print("branch numbers:",len(nt.branch_list))
+#print("start numbers:",len(nt.start_list))
+
