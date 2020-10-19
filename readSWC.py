@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 class SWC:
     def __init__(self,id,type,x,y,z,radius,pid):
@@ -27,6 +28,14 @@ class NT:
         for swc in self.swc_list:
             co_list.append([swc.x,swc.y,swc.z])
         return co_list
+
+    def count_length(self):
+        ans=0
+        for swc in self.swc_list:
+            if swc.pid!=-1:
+                pswc=self.swc_list[swc.pid-1]
+                ans+=math.sqrt((swc.x-pswc.x)**2+(swc.y-pswc.y)**2+(swc.z-pswc.z)**2)
+        self.total_length=ans
 
     def count_tip_branch(self):
         #get tip points and branch points
