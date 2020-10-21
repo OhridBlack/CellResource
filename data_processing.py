@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import os
 from cluster_heatmap import hierarchy_cluster
+from cluster_heatmap import heatmap
 from scipy.cluster import hierarchy
 
 def feature_csv(path,csv_name=None):
@@ -88,7 +89,7 @@ ssp:0.32/0.31 3/4类
 #writeLabel(label_cluster,"SSp")
 #print(label_cluster)
 
-def neuronProjection(type_name,cluster_number):
+def neuronClusterDataFrame(type_name,cluster_number):
     path_fixed="C:\\Users\\Black\\Desktop\\ipy聚类分析\\projection_matrix_allen_ml.xlsx"
     df=pd.read_excel(path_fixed,index_col=0)
     path_cluster_label="E:\\pythonBlack\\projection_neuron\\feature\\"+type_name+"_cluster_label.txt"
@@ -115,8 +116,100 @@ def neuronProjection(type_name,cluster_number):
         df_list.append(df_)
     return df_list
 
+#print(neuronProjection("SSp",4))
 
+'''
+cp: ipsi_SNr, ipsi_CP, ipsi_fiber tracts, ipsi_GPe, ipsi_CEA, ipsi_ACB, ipsi_MRN, ipsi_SI, ipsi_MOs, ipsi_PO, ipsi_RSPv, contra_ACAd
+vpm: ipsi_SSp-m, ipsi_SSp-bfd, ipsi_SSp-n, ipsi_SSp_ul, ipsi_SSp-un, ipsi_SSp-tr, ipsi_SSs, ipsi_VISa, ipsi_VISrl, ipsi_GU, ipsi_VISC, ipsi_AUDd, ipsi_VISp, ipsi_MOs, ipsi_MOp, ipsi_fiber tracts, ipsi_AUDp, ipsi_VISal
+mop: ipsi_SSp-ll, contra_Mop, ipsi_VISC, ipsi_MOs, contra_MOs, ipsi_CP, ipsi_MOp, ipsi_VPM, ipsi_VAL, ipsi_AId, ipsi_fiber tracts, ipsi_VM, ipsi_ZI, ipsi_SCm, contra_SPVI
+mos: ipsi_SSp-bfd, ipsi_MOp, ipsi_MOs, ipsi_CP, ipsi_SCm, ipsi_MD, ipsi_LP, ipsi_VAL, ipsi_PO, contra_MOp, contra_MOs, ipsi_fiber tracts, ipsi_MRN, ipsi_PF, contra_CP, ipsi_VM, ipsi_SMT, ipsi_VPM, ipsi_GPe, contra_VM
+ssp: ipsi_SSp-m, ipsi_SSp-ul, ipsi_SSp-n, ipsi_SSp-bfd, ipsi_SSp-un, ipsi_SSp-ll, ipsi_SSp-tr, ipsi_SSs, ipsi_PO, ipsi_CP, ipsi_MOp, ipsi_fiber tracts, ipsi_VAL, ipsi_VPM, contra_SPVO, ipsi_EPd, ipsi_RSPd, ipsi_VISrl, ipsi_MRN, ipsi_LP, ipsi_APN, ipsi_MOs, ipsi_ENTl
+'''
 
+'''
+df_list=neuronClusterDataFrame("SSp",4)
 
+for i in range(4):
+    print(len(df_list[i]))
 
-neuronProjection("SSp",4)
+df_heatmap=pd.DataFrame()
+order=[3,1,2,0]
+for i in order:
+    df=df_list[i]
+    df_heatmap=df_heatmap.append(
+        df[["ipsi_SSp-m", "ipsi_SSp-ul", "ipsi_SSp-n", "ipsi_SSp-bfd", "ipsi_SSp-un", "ipsi_SSp-ll", "ipsi_SSp-tr",
+              "ipsi_SSs", "ipsi_PO", "ipsi_CP", "ipsi_MOp", "ipsi_fiber tracts", "ipsi_VAL", "ipsi_VPM", "contra_SPVO",
+              "ipsi_EPd", "ipsi_RSPd", "ipsi_VISrl", "ipsi_MRN", "ipsi_LP", "ipsi_APN", "ipsi_MOs", "ipsi_ENTl"]]
+    )
+heatmap(df_heatmap)
+'''
+
+'''
+df_list=neuronClusterDataFrame("CP",4)
+
+for i in range(4):
+    print(len(df_list[i]))
+
+df_heatmap=pd.DataFrame()
+order=[0,3,2,1]
+for i in order:
+    df=df_list[i]
+    df_heatmap=df_heatmap.append(
+        df[["ipsi_SNr", "ipsi_CP", "ipsi_fiber tracts", "ipsi_GPe", "ipsi_CEA", "ipsi_ACB", "ipsi_MRN", "ipsi_SI",
+            "ipsi_MOs", "ipsi_PO", "ipsi_RSPv", "contra_ACAd"]]
+    )
+heatmap(df_heatmap)
+'''
+
+'''
+df_list=neuronClusterDataFrame("VPM",4)
+
+for i in range(10):
+    print(len(df_list[i]))
+
+df_heatmap=pd.DataFrame()
+order=[2,3,1,0]
+for i in order:
+    df=df_list[i]
+    df_heatmap=df_heatmap.append(
+        df[["ipsi_SSp-m", "ipsi_SSp-bfd", "ipsi_SSp-n", "ipsi_SSp-ul", "ipsi_SSp-un", "ipsi_SSp-tr", "ipsi_SSs",
+            "ipsi_VISa", "ipsi_VISrl", "ipsi_GU", "ipsi_VISC", "ipsi_AUDd", "ipsi_VISp", "ipsi_MOs", "ipsi_MOp",
+            "ipsi_fiber tracts", "ipsi_AUDp", "ipsi_VISal"]]
+    )
+heatmap(df_heatmap)
+'''
+
+'''
+df_list=neuronClusterDataFrame("MOs",4)
+
+for i in range(10):
+    print(len(df_list[i]))
+
+df_heatmap=pd.DataFrame()
+order=[1,2,3,0]
+for i in order:
+    df=df_list[i]
+    df_heatmap=df_heatmap.append(
+        df[["ipsi_SSp-bfd", "ipsi_MOp", "ipsi_MOs", "ipsi_CP", "ipsi_SCm", "ipsi_MD", "ipsi_LP", "ipsi_VAL", "ipsi_PO",
+            "contra_MOp", "contra_MOs", "ipsi_fiber tracts", "ipsi_MRN", "ipsi_PF", "contra_CP", "ipsi_VM", "ipsi_SMT",
+            "ipsi_VPM", "ipsi_GPe", "contra_VM"]]
+    )
+heatmap(df_heatmap)
+'''
+
+'''
+df_list=neuronClusterDataFrame("MOp",4)
+
+for i in range(10):
+    print(len(df_list[i]))
+
+df_heatmap=pd.DataFrame()
+order=[2,1,3,0]
+for i in order:
+    df=df_list[i]
+    df_heatmap=df_heatmap.append(
+        df[["ipsi_SSp-ll", "contra_MOp", "ipsi_VISC", "ipsi_MOs", "contra_MOs", "ipsi_CP", "ipsi_MOp", "ipsi_VPM",
+            "ipsi_VAL", "ipsi_AId", "ipsi_fiber tracts", "ipsi_VM", "ipsi_ZI", "ipsi_SCm", "contra_SPVI"]]
+    )
+heatmap(df_heatmap)
+'''
