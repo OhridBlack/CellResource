@@ -37,7 +37,8 @@ def hierarchy_cluster(data_cluster,method="single",labels=None,plt_name=None):
 #hierarchy_cluster(newdf,newdf.index)
 
 def heatmap(data_heatmap):
-    sns.heatmap(data_heatmap.T)
+    sns.heatmap(data_heatmap.T,cmap="YlGnBu",xticklabels=False)
+
     plt.show()
 
 #heatmap(newdf)
