@@ -8,7 +8,7 @@ from cluster_heatmap import hierarchy_cluster
 from cluster_heatmap import heatmap
 from scipy.cluster import hierarchy
 
-def feature_csv(path,csv_name=None):
+def feature_csv_angle_hist(path,csv_name=None):
     '''
     :param path: 一个神经元类的文件夹，其中所有文件都是该类的神经元
     :return:一个记录了 name area branch tip total(density) angle_hist(0-7) 的excel文件
@@ -44,7 +44,7 @@ def feature_csv(path,csv_name=None):
 #choose=["CP","MOs","MOp","VPM","SSp-bfd","SSp-ul","SSp-ll","SSp-m","SSp-n"]
 #for chooseone in choose:
     #path="SSp\\"+chooseone if chooseone.startswith("SSp") else chooseone
-    #feature_csv("E:\\pythonBlack\\projection_neuron\\"+path,chooseone+"_feature.csv")
+    #feature_csv_angle_hist("E:\\pythonBlack\\projection_neuron\\"+path,chooseone+"_feature.csv")
 
 def sort_label(labels,cluster_number,label_type):
     label_cluster=[[]for _ in range(cluster_number)]

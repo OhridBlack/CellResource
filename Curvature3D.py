@@ -1,4 +1,5 @@
-#from LineCurvature2D import lineCurvature2D
+from LineCurvature2D import lineCurvature2D
+from readSWC import NT
 import math
 import numpy as np
 import random
@@ -54,5 +55,46 @@ def point3d_2d(a,b,c):
 
     point_list_2d=[[a_new[0],a_new[1]],[b_new[0],b_new[1]],[c_new[0],c_new[1]]]
     return point_list_2d
+
+def curvature3d(a,b,c):
+    lines=[[0,1],[1,2]]
+    vertices2D=point3d_2d(a,b,c)
+    k=lineCurvature2D(vertices2D,lines)
+    return k[1]
+
+
+def count_curvature_features(nt):
+    if len(nt.total_branch_list)==0:
+        nt.count_total_branch()
+    invalid_branch_num=0
+    total_branch_curvature_sum=[]
+    total_branch_curvature_std=[]
+    co_list=nt.coordinate_list()
+    for branch in nt.total_branch_list:
+        if len(branch)<3:
+            invalid_branch_num+=1
+            continue
+        single_branch_curvature=[]
+        for i in range(len(branch)-2):
+            a=co_list[branch[i]-1]
+            b=co_list[branch[i+1]-1]
+            c=co_list[branch[i+2]-1]
+            k=curvature3d(a,b,c)
+            single_branch_curvature.append(k)
+        single_branch_curvature=np.array(single_branch_curvature)
+        sum_curvature=np.sum(single_branch_curvature)
+        std_curvature=np.std(single_branch_curvature)
+        total_branch_curvature_sum.append(sum_curvature)
+        total_branch_curvature_std.append(std_curvature)
+    total_branch_curvature_std=np.array(total_branch_curvature_std)
+    total_branch_curvature_sum=np.array(total_branch_curvature_sum)
+    mean_sum=np.mean(total_branch_curvature_sum)
+    std_sum=np.std(total_branch_curvature_sum)
+    mean_std=np.mean(total_branch_curvature_std)
+    std_std=np.std(total_branch_curvature_std)
+    print("total "+str(invalid_branch_num)+" invalid branches!")
+    return mean_sum,std_sum,mean_std,std_std
+
+
 
 

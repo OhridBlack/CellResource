@@ -22,6 +22,8 @@ class NT:
         self.start_list=[]
         self.soma=None
         self.total_length=0
+        self.total_branch_list=[]
+        self.childrenDic={}
 
     def coordinate_list(self):
         co_list=[]
@@ -30,6 +32,8 @@ class NT:
         return co_list
 
     def count_length(self):
+        if self.total_length>0:
+            return
         ans=0
         for swc in self.swc_list:
             if swc.pid!=-1:
@@ -38,6 +42,8 @@ class NT:
         self.total_length=ans
 
     def count_tip_branch(self):
+        if len(self.tip_list)>0 and len(self.branch_list)>0:
+            return
         #get tip points and branch points
         childrenDic={}
         for swc in self.swc_list:
@@ -56,7 +62,29 @@ class NT:
                 self.tip_list.append(swc)
             elif childrenDic[swc.id]>=2:
                 self.branch_list.append(swc)
+        self.childrenDic=childrenDic
 
+    def count_total_branch(self):
+        if len(self.total_branch_list)>0:
+            return
+        if len(self.tip_list)==0 or len(self.branch_list)==0:
+            self.count_tip_branch()
+        total_branch_list=[]
+        for swc in self.tip_list:
+            branch=[swc.id]
+            pid=swc.pid
+            while pid in self.childrenDic and self.childrenDic[pid]==1:
+                branch.append(pid)
+                pid=self.swc_list[pid-1].pid
+            total_branch_list.append(branch)
+        for swc in self.branch_list:
+            branch=[swc.id]
+            pid=swc.pid
+            while pid in self.childrenDic and self.childrenDic[pid]==1:
+                branch.append(pid)
+                pid=self.swc_list[pid-1].pid
+            total_branch_list.append(branch)
+        self.total_branch_list=total_branch_list
 
 
     #def resample(self,step):
@@ -74,9 +102,13 @@ def readSWC_NT(filepath):
     nt=NT(swc_list)
     return nt
 
-#def readNTs(filepath):
 
 #nt=readSWC_NT("E:\\163data_resource\\5\\01_5.v3dpbd_smartTracing.swc")
+#nt=readSWC_NT("C:\\Users\\Black\\Desktop\\swc.txt")
+#nt.count_total_branch()
+#nt.count_length()
+#print(nt.total_branch_list)
+#print(nt.total_length)
 #nt.count_tip_branch()
 #print("tip numbers:",len(nt.tip_list))
 #print("branch numbers:",len(nt.branch_list))

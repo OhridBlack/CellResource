@@ -83,8 +83,9 @@ def lineCurvature2D(Vertices,Lines):
         '''
     k=np.zeros((vertices.shape[0],1))
     for i in range(1,vertices.shape[0]-1):
-        print(i)
-        invm=np.linalg.inv(M[i])
+        #print(i)
+        invm=np.linalg.inv(M[i]).T
+        #invm=inv3(M[i])
         a2=invm[0][1]*x[i][0]+invm[1][1]*x[i][1]+invm[2][1]*x[i][2]
         a3=invm[0][2]*x[i][0]+invm[1][2]*x[i][1]+invm[2][2]*x[i][2]
         b2 = invm[0][1] * y[i][0] + invm[1][1] * y[i][1] + invm[2][1] * y[i][2]
@@ -94,10 +95,10 @@ def lineCurvature2D(Vertices,Lines):
     return k
 
 
-vertices=[[2,3],[3,2],[6,9]]
-lines=[[0,1],[1,2]]
-k=lineCurvature2D(vertices,lines)
-print(k)
+#vertices=[[2,3],[3,2],[6,9]]
+#lines=[[0,1],[1,2]]
+#k=lineCurvature2D(vertices,lines)
+#print(k)
 
 
 
