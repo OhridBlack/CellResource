@@ -33,5 +33,8 @@ def feature_csv_curvature(path,csv_name=None):
         df=df.append([new],ignore_index=True)
     df.to_csv(csv_name,columns=["name","length","bifur_num","mean_sum","std_sum","mean_std","std_std"])
 
-path="MOs"
-feature_csv_curvature("E:\\pythonBlack\\projection_neuron\\"+path,"MOs_curvature_feature.csv")
+#path_list=["MOs","MOp","VPM","CP","SSp\\SSp-bfd","SSp\\SSp-ul","SSp\\SSp-ll","SSp\\SSp-m","SSp\\SSp-n"]
+#for path in path_list:
+#    feature_csv_curvature("E:\\pythonBlack\\projection_neuron\\"+path,path+"_curvature_feature.csv")
+
+def 

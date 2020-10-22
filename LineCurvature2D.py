@@ -95,7 +95,7 @@ def lineCurvature2D(Vertices,Lines):
     return k
 
 
-#vertices=[[2,3],[3,2],[6,9]]
+#vertices=[[6,9],[3,1],[2,4]]
 #lines=[[0,1],[1,2]]
 #k=lineCurvature2D(vertices,lines)
 #print(k)

@@ -43,15 +43,22 @@ def point3d_2d(a,b,c):
     bc=c-b
     normal=np.cross(ba,bc)
     normal_length=math.sqrt(normal[0]**2+normal[1]**2+normal[2]**2)
+    if normal_length==0:
+        return [[0,0],[0,1],[0,2]]
     normal=normal/normal_length
     normal_l=np.array([0,0,1])
     theta=math.acos(np.dot(normal,normal_l))
     #theta=theta if theta>math.pi/2 else math.pi-theta
-    axis=np.cross(normal,normal_l)
-    R=rodrigues_rotation(axis,theta)
-    a_new=np.dot(R,a.T)
-    b_new=np.dot(R,b.T)
-    c_new=np.dot(R,c.T)
+    if normal[0]==0 and normal[1]==0:
+        a_new=a
+        b_new=b
+        c_new=c
+    else:
+        axis=np.cross(normal,normal_l)
+        R=rodrigues_rotation(axis,theta)
+        a_new=np.dot(R,a.T)
+        b_new=np.dot(R,b.T)
+        c_new=np.dot(R,c.T)
 
     point_list_2d=[[a_new[0],a_new[1]],[b_new[0],b_new[1]],[c_new[0],c_new[1]]]
     return point_list_2d
@@ -61,7 +68,6 @@ def curvature3d(a,b,c):
     vertices2D=point3d_2d(a,b,c)
     k=lineCurvature2D(vertices2D,lines)
     return k[1]
-
 
 def count_curvature_features(nt):
     if len(nt.total_branch_list)==0:
@@ -79,7 +85,7 @@ def count_curvature_features(nt):
             a=co_list[branch[i]-1]
             b=co_list[branch[i+1]-1]
             c=co_list[branch[i+2]-1]
-            k=curvature3d(a,b,c)
+            k=abs(curvature3d(a,b,c))
             single_branch_curvature.append(k)
         single_branch_curvature=np.array(single_branch_curvature)
         sum_curvature=np.sum(single_branch_curvature)
@@ -92,9 +98,17 @@ def count_curvature_features(nt):
     std_sum=np.std(total_branch_curvature_sum)
     mean_std=np.mean(total_branch_curvature_std)
     std_std=np.std(total_branch_curvature_std)
+    print("mean_sum",mean_sum)
+    print("std_sum",std_sum)
+    print("mean_std",mean_std)
+    print("std_std",std_std)
     print("total "+str(invalid_branch_num)+" invalid branches!")
     return mean_sum,std_sum,mean_std,std_std
 
+#from readSWC import readSWC_NT
+
+#nt=readSWC_NT("E:\\pythonBlack\\projection_neuron\\MOs\\r1_AA0110.swc")
+#count_curvature_features(nt)
 
 
 
