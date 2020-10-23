@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 import pandas as pd
+from skimage import transform
+import skimage.data as d
 
 def violin_plot(data,features_name="curvature",labels=["1","2","3","4"]):
     fig,axes=plt.subplots(figsize=(12,5))
@@ -50,7 +52,18 @@ def scatter_density_plot(data,plot_name,spec_feature,features_name):
 
 def scatter2D_background_plot(data,plot_name,feature_x_name,feature_y_name,background_path):
     background=plt.imread(background_path)
+    #background=d.camera()
+    data[:,0]=data[:,0]-np.min(data[:,0])
+    data[:,1]=data[:,1]-np.min(data[:,1])
+    dataX=np.max(data[:,0])
+    dataY=np.max(data[:,1])
+    print(dataX)
+    print(dataY)
+    #background_new=transform.resize(background,(int(dataY),int(dataX)))
     plt.imshow(background)
+    #plt.imshow(background_new)
+    plt.xlim(0,max(dataX,800))
+    plt.ylim(0,max(dataY,600))
     plt.scatter(data[:,0],data[:,1])
     plt.title(plot_name)
     plt.xlabel(feature_x_name)
@@ -59,5 +72,4 @@ def scatter2D_background_plot(data,plot_name,feature_x_name,feature_y_name,backg
 
 #data=[[i,i*0.5+i*i*0.1]for i in range(100)]
 #data=np.array(data)
-#scatter2D_background_plot(data,"pn","x","y","C:\\Users\\Black\\Desktop\\maomao.jpg")
-
+#scatter2D_background_plot(data,"pn","x","y","C:\\Users\\Black\\Desktop\\CellResource\\YZ-r.jpg")
