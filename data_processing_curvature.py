@@ -3,7 +3,7 @@ from readSWC import readSWC_NT
 from readSWC import NT
 import pandas as pd
 import os
-from data_plot import violin_plot
+from data_plot import violin_plot,scatter_density_plot
 import numpy as np
 
 def feature_csv_curvature(path,csv_name=None):
@@ -82,6 +82,7 @@ def violin_curvature_denoising(path_list,curvature_type,labels,noise_ratio=1.5,l
             data.append(df.tolist())
     violin_plot(data, curvature_type, labels)
 
+'''
 path_list=["feature\\CP_curvature_feature.csv",
            "feature\\VPM_curvature_feature.csv",
            "feature\\MOp_curvature_feature.csv",
@@ -95,4 +96,10 @@ labels=["CP","VPM","MOp","MOs"]
 labels2=["SSp-n","SSp-m","SSp-ll","SSp-ul","SSp-bfd"]
 for ct in ["mean_sum","std_sum","mean_std","std_std"]:
     violin_curvature_denoising(path_list, ct, labels)
+'''
 
+#df=pd.read_excel("E:\\pythonBlack\\projection_neuron\\feature\\total_curvature_feature.xlsx")
+#scatter_density_plot(df,"CP_VPM_MOp_MOs","label",["length","bifur_num"])
+
+#df=pd.read_excel("E:\\pythonBlack\\projection_neuron\\feature\\SSp_curvature_feature.xlsx")
+#scatter_density_plot(df,"SSp","label",["length","bifur_num"])
