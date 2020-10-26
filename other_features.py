@@ -20,7 +20,7 @@ def area_angleHist(NT,somaIdx=0):
     y_min = np.min(co_list_projected[:, 1])
     y_max = np.max(co_list_projected[:, 1])
     area=(x_max-x_min)*(y_max-y_min)
-    angle_hist=caculateAngle_Hist(co_list_projected)
+    angle_hist=caculateAngle_Hist(co_list_projected,True)
 
     return area,[[x_min,y_min],[x_max,y_max]],angle_hist
 
@@ -47,3 +47,8 @@ def other_features(NT):
 #print("branch numbers:",len(nt.branch_list))
 #print("start numbers:",len(nt.start_list))
 #other_features(nt)
+
+#nt=readSWC_NT("E:\\pythonBlack\\projection_neuron\\SSp\\SSp-ul\\r1_17543_00140.semi_r.swc")
+#nt.count_tip_branch()
+#print(len(nt.start_list))
+#area_angleHist(nt)

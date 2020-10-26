@@ -14,12 +14,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-def showAngle_Hist(data):
+def showAngle_Hist1(data):
     plt.hist(data,8,edgecolor='black')
     plt.xlabel('angle')
     plt.ylabel('numbers')
     plt.title('angle_hist')
     plt.show()
+
+#def showAngle_Hist2(data):
+
 
 def caculateAngle_Hist(data,NeedShow=False):
     '''
@@ -39,7 +42,7 @@ def caculateAngle_Hist(data,NeedShow=False):
         angle_hist[int(theta)]+=1
         theta_list.append(theta)
     if NeedShow:
-        showAngle_Hist(theta_list)
+        showAngle_Hist1(theta_list)
     return angle_hist
 
 '''

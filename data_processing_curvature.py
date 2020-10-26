@@ -3,7 +3,7 @@ from readSWC import readSWC_NT
 from readSWC import NT
 import pandas as pd
 import os
-from data_plot import violin_plot,scatter_density_plot
+from data_plot import violin_plot,scatter_density_plot,density2D_plot
 import numpy as np
 
 def feature_csv_curvature(path,csv_name=None):
@@ -103,3 +103,12 @@ for ct in ["mean_sum","std_sum","mean_std","std_std"]:
 
 #df=pd.read_excel("E:\\pythonBlack\\projection_neuron\\feature\\SSp_curvature_feature.xlsx")
 #scatter_density_plot(df,"SSp","label",["length","bifur_num"])
+
+'''
+name_label=["CP","VPM","MOp","MOs","SSp-bfd","SSp-n","SSp-m","SSp-ul","SSp-ll"]
+path="E:\\pythonBlack\\projection_neuron\\feature\\"
+for name in name_label:
+    total_path=path+name+"_curvature_feature.csv"
+    df=pd.read_csv(total_path)
+    density2D_plot(df["bifur_num"],df["length"],name,"bifur_num","length")
+'''
