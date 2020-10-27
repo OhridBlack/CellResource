@@ -73,3 +73,45 @@ def scatter2D_background_plot(data,plot_name,feature_x_name,feature_y_name,backg
 #data=[[i,i*0.5+i*i*0.1]for i in range(100)]
 #data=np.array(data)
 #scatter2D_background_plot(data,"pn","x","y","C:\\Users\\Black\\Desktop\\CellResource\\YZ-r.jpg")
+
+from mpl_toolkits.mplot3d import Axes3D
+def scatter3D_plot(data,plane=None):
+    data=np.array(data)
+    fig=plt.figure()
+    ax=fig.add_subplot(111,projection='3d')
+    for d in data:
+        ax.scatter(d[0],d[1],d[2],s=20,c='r')
+    if plane:
+        x_max=np.max(data[:,0])
+        x_min=np.min(data[:,0])
+        y_max=np.max(data[:,1])
+        y_min=np.min(data[:,1])
+        x=np.arange(x_min,x_max,1)
+        y=np.arange(y_min,y_max,1)
+        X,Y=np.meshgrid(x,y)
+        if plane[2]!=0:
+            ax.plot_surface(X,Y,Z=(-plane[3]-plane[0]*X-plane[1]*Y)/plane[2],color='g',alpha=0.6)
+        else:
+            print("error plane!")
+            return
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    ax.view_init(elev=15,azim=10)
+    plt.show()
+
+def scatter3D_2_plot(data1,data2,plot_name):
+    data1=np.array(data1)
+    data2=np.array(data2)
+    fig=plt.figure()
+    ax=fig.add_subplot(111,projection='3d')
+    for d1 in data1:
+        ax.scatter(d1[0],d1[1],d1[2],s=20,c='r',marker='o')
+    for d2 in data2:
+        ax.scatter(d2[0],d2[1],d2[2],s=20,c='g',marker='x')
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    ax.view_init(elev=15, azim=10)
+    plt.title(plot_name)
+    plt.show()

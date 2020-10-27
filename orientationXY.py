@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import math
 from readSWC import NT,readSWC_NT
+from data_plot import scatter3D_plot
 
 def cluster2plane(data):
     '''
@@ -82,9 +83,16 @@ def swc_cluster_arbor(arbor_data,nt):
         cluster_swc_list[index-1].append(swc)
     return cluster_swc_list
 
+'''
 nt=readSWC_NT("E:\\1523_r10_4to8optimal\\r10_17302_00050.semi_r.swc")
 data=readArbor("E:\\1523_r10_4to8optimal\\r10_17302_00050.semi_r.swc.autoarbor_m3.arborstat.txt")
 cluster_swc_list=swc_cluster_arbor(data,nt)
+data_swc=[]
 for c in cluster_swc_list:
-    print(len(c))
+    data_swc=[]
+    for swc in c:
+        data_swc.append([swc.x,swc.y,swc.z])
+    a,b,c,d=cluster2plane(data_swc)
+    scatter3D_plot(data_swc,[a,b,c,d])
+'''
 

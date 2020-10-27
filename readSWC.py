@@ -63,6 +63,11 @@ class NT:
             elif childrenDic[swc.id]>=2:
                 self.branch_list.append(swc)
         self.childrenDic=childrenDic
+        maxSomaChildren=0
+        for swc in self.start_list:
+            if childrenDic[swc.id]>maxSomaChildren:
+                self.soma=swc
+                maxSomaChildren=childrenDic[swc.id]
 
     def count_total_branch(self):
         if len(self.total_branch_list)>0:
