@@ -2,7 +2,7 @@ import os
 import numpy as np
 from readSWC import readSWC_NT,NT
 from orientationXY import readArbor,Arbor
-from data_plot import scatter3D_2_plot,scatter2D_background_plot
+from data_plot import scatter3D_2_plot,scatter2D_background_2_plot_3version
 
 '''
 for file in os.listdir("E:\\1523_r10_4to8optimal"):
@@ -50,7 +50,7 @@ VPM:0,1
 MOp:1
 MOs:0
 '''
-def arbor_soma_show(celltype,cluster_index_list=[0],swc_num=20):
+def arbor_soma_show3D(celltype,cluster_index_list=[0],swc_num=20):
     arbor_existing=findArborFile(celltype,4)
     for index in cluster_index_list:
         data_soma=[]
@@ -73,6 +73,31 @@ arbor_soma_show("VPM",[0,1])
 arbor_soma_show("MOs",[0])
 '''
 
+def arbor_soma_show2D(celltype,cluster_index_list=[0],swc_num=20,background_path_list=None):
+    arbor_existing = findArborFile(celltype, 4)
+    for index in cluster_index_list:
+        data_soma = []
+        data_arbor = []
+        for i in range(swc_num):
+            arbor_list = readArbor("E:\\pythonBlack\\projection_neuron\\arbor\\" + arbor_existing[index][i])
+            for arbor in arbor_list:
+                data_arbor.append(arbor.coordinate)
+            swc_name = arbor_existing[index][i].replace("r10", "r1")
+            swc_name = swc_name.replace(".txt", ".semi_r.swc")
+            nt = readSWC_NT(celltype + "\\" + swc_name)
+            nt.count_tip_branch()
+            data_soma.append([nt.soma.x, nt.soma.y, nt.soma.z])
+        plot_name = celltype + "_cluster" + str(index) + "_soma_arbor"
+        #scatter3D_2_plot(data_soma, data_arbor, plot_name)
+        scatter2D_background_2_plot_3version(data_soma,data_arbor,[plot_name+"_XoY",plot_name+"_YoZ",plot_name+"_XoZ"],
+                                             ["x","y","x"],["y","z","z"],background_path_list)
 
-
+'''
+background_path_list=["C:\\Users\\Black\\Desktop\\CellResource\\XY-c.jpg",
+                      "C:\\Users\\Black\\Desktop\\CellResource\\YZ.jpg",
+                      "C:\\Users\\Black\\Desktop\\CellResource\\XZ.jpg"]
+arbor_soma_show2D("CP",[0,1],20,background_path_list)
+arbor_soma_show2D("VPM",[0],20,background_path_list)
+arbor_soma_show2D("MOs",[0],20,background_path_list)
+'''
 

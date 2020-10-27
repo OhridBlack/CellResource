@@ -70,6 +70,30 @@ def scatter2D_background_plot(data,plot_name,feature_x_name,feature_y_name,backg
     plt.ylabel(feature_y_name)
     plt.show()
 
+def scatter2D_background_2_plot_3version(data1,data2,plot_name_list,feature_x_name_list,feature_y_name_list,background_path_list):
+    data1=np.array(data1)
+    data2=np.array(data2)
+    for i in range(3):
+        background=plt.imread(background_path_list[i])
+        plt.imshow(background)
+        if i==0:
+            plt.scatter(data2[:, 0], data2[:, 1], color="g", marker="x")
+            plt.scatter(data1[:,0],data1[:,1],color="r",marker="o")
+
+        elif i==1:
+            plt.scatter(data2[:, 1], data2[:, 2], color="g", marker="x")
+            plt.scatter(data1[:, 1], data1[:, 2], color="r", marker="o")
+
+        else:
+            plt.scatter(data2[:, 0], data2[:, 2], color="g", marker="x")
+            plt.scatter(data1[:, 0], data1[:, 2], color="r", marker="o")
+
+        plt.title(plot_name_list[i])
+        plt.xlabel(feature_x_name_list[i])
+        plt.ylabel(feature_y_name_list[i])
+        plt.savefig("E:\\pythonBlack\\projection_neuron\\feature\\picture\\" + plot_name_list[i] + ".jpg")
+        plt.show()
+
 #data=[[i,i*0.5+i*i*0.1]for i in range(100)]
 #data=np.array(data)
 #scatter2D_background_plot(data,"pn","x","y","C:\\Users\\Black\\Desktop\\CellResource\\YZ-r.jpg")
