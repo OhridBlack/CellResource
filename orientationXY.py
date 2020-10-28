@@ -30,19 +30,17 @@ def plane_X_Y_angle(a,b):
     :param c:
     :return: 与X,Y轴的夹角
     '''
-    angle_x=math.acos(a)
-    angle_y=math.acos(b)
+    angle_x=math.asin(a)
+    angle_y=math.asin(b)
     if angle_x>math.pi/2:
         angle_x=math.pi-angle_x
     if angle_y>math.pi/2:
         angle_y=math.pi-angle_y
-    angle_x=math.pi/2-angle_x
-    angle_y=math.pi/2-angle_y
     angle_x/=math.pi
     angle_x*=180
     angle_y/=math.pi
     angle_y*=180
-    return angle_x,angle_y
+    return abs(angle_x),abs(angle_y)
 
 class Arbor:
     def __init__(self,index,node_count,x,y,z):
@@ -83,7 +81,7 @@ def swc_cluster_arbor(arbor_data,nt):
         cluster_swc_list[index-1].append(swc)
     return cluster_swc_list
 
-'''
+
 nt=readSWC_NT("E:\\1523_r10_4to8optimal\\r10_17302_00050.semi_r.swc")
 data=readArbor("E:\\1523_r10_4to8optimal\\r10_17302_00050.semi_r.swc.autoarbor_m3.arborstat.txt")
 cluster_swc_list=swc_cluster_arbor(data,nt)
@@ -92,7 +90,9 @@ for c in cluster_swc_list:
     data_swc=[]
     for swc in c:
         data_swc.append([swc.x,swc.y,swc.z])
-    a,b,c,d=cluster2plane(data_swc)
-    scatter3D_plot(data_swc,[a,b,c,d])
-'''
+    _a,_b,_c,_d=cluster2plane(data_swc)
+    angle_x,angle_y=plane_X_Y_angle(_a,_b)
+    print(angle_x,angle_y)
+    #scatter3D_plot(data_swc,[a,b,c,d])
+
 

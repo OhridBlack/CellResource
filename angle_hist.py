@@ -58,4 +58,11 @@ data=[
 ]
 angle_hist=caculateAngle_Hist(data,True)
 print(angle_hist)
+
+from readSWC import NT,readSWC_NT
+nt=readSWC_NT("E:\\2710_r1\\r1_1708\\r1_17302_00050.semi_r.swc")
+co_list=nt.coordinate_list()
+co_list=np.array(co_list)
+co_list-=co_list[0]
+caculateAngle_Hist(co_list,True)
 '''

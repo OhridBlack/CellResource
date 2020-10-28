@@ -71,9 +71,12 @@ def violin_curvature_denoising(path_list,curvature_type,labels,noise_ratio=1.5,l
         low_quartile_idx=total_num//4
         up_quartile_idx=low_quartile_idx*3
         df.sort_values(curvature_type,inplace=True)
-        df=df[curvature_type]
-        low_limit=df.loc[low_quartile_idx]/noise_ratio
-        up_limit=df.loc[up_quartile_idx]*noise_ratio
+        df=df[curvature_type].reset_index(drop=True)
+        distance_quartile=df[up_quartile_idx]-df[low_quartile_idx]
+        print(low_quartile_idx,up_quartile_idx)
+        print(df[low_quartile_idx],df[up_quartile_idx])
+        low_limit=df.loc[low_quartile_idx]-noise_ratio*distance_quartile
+        up_limit=df.loc[up_quartile_idx]+noise_ratio*distance_quartile
         #print(low_limit,up_limit)
         if up_limit-low_limit<limit:
             data.append(df.tolist())
@@ -94,6 +97,7 @@ path_list2=["feature\\SSp-n_curvature_feature.csv",
             "feature\\SSp-bfd_curvature_feature.csv"]
 labels=["CP","VPM","MOp","MOs"]
 labels2=["SSp-n","SSp-m","SSp-ll","SSp-ul","SSp-bfd"]
+violin_curvature_denoising(path_list,"mean_std",labels)
 for ct in ["mean_sum","std_sum","mean_std","std_std"]:
     violin_curvature_denoising(path_list, ct, labels)
 '''
