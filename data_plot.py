@@ -139,3 +139,35 @@ def scatter3D_2_plot(data1,data2,plot_name):
     ax.view_init(elev=15, azim=10)
     plt.title(plot_name)
     plt.show()
+
+
+def radio_shot_plot(center,tips,vision_flag=2):
+    '''
+
+    :param center: 中心点
+    :param tips: 放射点，由中心点向此放射线
+    :param vision_flag: 0,1,2标记为三个视角，YOZ，XOZ，XOY
+    其中的颜色深浅由放射点的第三轴深度决定
+    :return:
+    '''
+    center=np.array(center)
+    tips=np.array(tips)
+    #RGB 越浅则B越小、G越大；
+    colors=['#80FF00','#80DF1F','#80BF3F','#809F5F','#807F7F','#805F9F','#803FBF','#801FDF','#8000FF']
+    lower_limit=np.min(tips[:vision_flag])
+    distance=np.max(tips[:,vision_flag])-lower_limit
+    step=distance/8
+    for i in range(len(tips)):
+        color=colors[int((tips[i][vision_flag]-lower_limit)/step)]
+        if vision_flag==0:
+            mix0=[center[1],tips[i][1]]
+            mix1=[center[2],tips[i][2]]
+        elif vision_flag==1:
+            mix0 = [center[0], tips[i][0]]
+            mix1 = [center[2], tips[i][2]]
+        else:
+            mix0 = [center[0], tips[i][0]]
+            mix1 = [center[1], tips[i][1]]
+        plt.plot(mix0,mix1,color=color)
+    plt.show()
+
