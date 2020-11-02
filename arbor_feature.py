@@ -2,7 +2,7 @@ import os
 import numpy as np
 from readSWC import readSWC_NT,NT
 from orientationXY import readArbor,Arbor
-from data_plot import scatter3D_2_plot,scatter2D_background_2_plot_3version
+from data_plot import scatter3D_2_plot,scatter2D_background_2_plot_3version,radio_shot_plot
 
 '''
 for file in os.listdir("E:\\1523_r10_4to8optimal"):
@@ -100,4 +100,3 @@ arbor_soma_show2D("CP",[0,1],20,background_path_list)
 arbor_soma_show2D("VPM",[0],20,background_path_list)
 arbor_soma_show2D("MOs",[0],20,background_path_list)
 '''
-

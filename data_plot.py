@@ -141,7 +141,7 @@ def scatter3D_2_plot(data1,data2,plot_name):
     plt.show()
 
 
-def radio_shot_plot(center,tips,vision_flag=2):
+def radio_shot_plot(center,tips,vision_flag=2,border=10):
     '''
 
     :param center: 中心点
@@ -154,11 +154,45 @@ def radio_shot_plot(center,tips,vision_flag=2):
     tips=np.array(tips)
     #RGB 越浅则B越小、G越大；
     colors=['#80FF00','#80DF1F','#80BF3F','#809F5F','#807F7F','#805F9F','#803FBF','#801FDF','#8000FF']
-    lower_limit=np.min(tips[:vision_flag])
+    lower_limit=np.min(tips[:,vision_flag])
     distance=np.max(tips[:,vision_flag])-lower_limit
     step=distance/8
+    if vision_flag==0:
+        x_max=np.max(tips[:,1])
+        x_min=np.min(tips[:,1])
+        y_max=np.max(tips[:,2])
+        y_min=np.min(tips[:,2])
+        xlim=max(center[1]-x_min,x_max-center[1])
+        ylim=max(center[2]-y_min,y_max-center[2])
+        plt.xlim(center[1]-xlim-border,center[1]+xlim+border)
+        plt.ylim(center[2]-ylim-border,center[2]+ylim+border)
+        plt.xlabel("Y")
+        plt.ylabel("Z")
+    elif vision_flag==1:
+        x_max=np.max(tips[:,0])
+        x_min=np.min(tips[:,0])
+        y_max=np.max(tips[:,2])
+        y_min=np.min(tips[:,2])
+        xlim = max(center[0] - x_min, x_max - center[0])
+        ylim = max(center[2] - y_min, y_max - center[2])
+        plt.xlim(center[0] - xlim-border, center[0] + xlim+border)
+        plt.ylim(center[2] - ylim-border, center[2] + ylim+border)
+        plt.xlabel("X")
+        plt.ylabel("Z")
+    else:
+        x_max = np.max(tips[:, 0])
+        x_min = np.min(tips[:, 0])
+        y_max = np.max(tips[:, 1])
+        y_min = np.min(tips[:, 1])
+        xlim = max(center[0] - x_min, x_max - center[0])
+        ylim = max(center[1] - y_min, y_max - center[1])
+        plt.xlim(center[0] - xlim-border, center[0] + xlim+border)
+        plt.ylim(center[1] - ylim-border, center[1] + ylim+border)
+        plt.xlabel("X")
+        plt.ylabel("Y")
     for i in range(len(tips)):
         color=colors[int((tips[i][vision_flag]-lower_limit)/step)]
+        print(color)
         if vision_flag==0:
             mix0=[center[1],tips[i][1]]
             mix1=[center[2],tips[i][2]]
@@ -170,4 +204,3 @@ def radio_shot_plot(center,tips,vision_flag=2):
             mix1 = [center[1], tips[i][1]]
         plt.plot(mix0,mix1,color=color)
     plt.show()
-

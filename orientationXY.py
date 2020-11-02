@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import math
 from readSWC import NT,readSWC_NT
-from data_plot import scatter3D_plot
+from data_plot import scatter3D_plot,radio_shot_plot
 
 def cluster2plane(data):
     '''
@@ -81,7 +81,7 @@ def swc_cluster_arbor(arbor_data,nt):
         cluster_swc_list[index-1].append(swc)
     return cluster_swc_list
 
-
+'''
 nt=readSWC_NT("E:\\1523_r10_4to8optimal\\r10_17302_00050.semi_r.swc")
 data=readArbor("E:\\1523_r10_4to8optimal\\r10_17302_00050.semi_r.swc.autoarbor_m3.arborstat.txt")
 cluster_swc_list=swc_cluster_arbor(data,nt)
@@ -94,5 +94,21 @@ for c in cluster_swc_list:
     angle_x,angle_y=plane_X_Y_angle(_a,_b)
     print(angle_x,angle_y)
     #scatter3D_plot(data_swc,[a,b,c,d])
+'''
+
+'''
+nt=readSWC_NT("E:\\1523_r10_4to8optimal\\r10_17302_00050.semi_r.swc")
+data=readArbor("E:\\1523_r10_4to8optimal\\r10_17302_00050.semi_r.swc.autoarbor_m3.arborstat.txt")
+cluster_swc_list=swc_cluster_arbor(data,nt)
+for i,c in enumerate(cluster_swc_list):
+    if i not in [0,2,7]:
+        continue
+    c_coordinate=[]
+    for ci in c:
+        c_coordinate.append([ci.x,ci.y,ci.z])
+    radio_shot_plot(data[i].coordinate,c_coordinate,vision_flag=0,border=5)
+    radio_shot_plot(data[i].coordinate, c_coordinate, vision_flag=1,border=5)
+    radio_shot_plot(data[i].coordinate, c_coordinate, vision_flag=2,border=5)
+'''
 
 
