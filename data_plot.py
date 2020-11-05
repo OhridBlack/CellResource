@@ -140,7 +140,6 @@ def scatter3D_2_plot(data1,data2,plot_name):
     plt.title(plot_name)
     plt.show()
 
-
 def radio_shot_plot(center,tips,vision_flag=2,border=10):
     '''
 
@@ -204,3 +203,35 @@ def radio_shot_plot(center,tips,vision_flag=2,border=10):
             mix1 = [center[1], tips[i][1]]
         plt.plot(mix0,mix1,color=color)
     plt.show()
+
+def radar_plot(data,labels,plot_name):
+    '''
+
+    :param data: 多维度数据，可以有多个
+    :param labels: 各个维度上的名称
+    :return: 雷达图
+    '''
+    data=np.array(data)
+    colors=['#80FF00','#0000FF','#80BF3F','#809F5F','#807F7F','#805F9F','#803FBF','#801FDF','#8000FF']
+    if len(data[0])!=len(labels):
+        print("Error!")
+        return
+    size=len(labels)
+    fig=plt.figure()
+    ax=fig.add_subplot(111,polar=True)
+    angles=np.linspace(0,2*np.pi,size,endpoint=False)
+    angles=np.concatenate((angles,[angles[0]]))#闭合
+    for i,d in enumerate(data):
+        b=np.concatenate((d,[d[0]]))#闭合
+        ax.plot(angles,b,'bo-',linewidth=2)
+        ax.fill(angles,b,facecolor=colors[i],alpha=0.25)
+        ax.set_thetagrids(angles*180/np.pi,labels,fontproperties="SimHei")
+        ax.set_title(plot_name,va='bottom',fontproperties="SimHei")
+        ax.set_rlim(0,10)
+        ax.grid(True)
+    plt.show()
+'''
+labels=["length","bifur_name","mean_sum","std_sum","mean_std"]
+data=[[0.8,3,4,1.7,7],[6,6,3.4,0.5,0.7]]
+radar_plot(data,labels,"CP_17302_00005__236174_3429")
+'''
